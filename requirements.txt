@@ -1,0 +1,7 @@
+firebase-admin
+Flask
+Flask-Cors
+Flask-RESTful
+pymongo
+python-dotenv
+gunicorn

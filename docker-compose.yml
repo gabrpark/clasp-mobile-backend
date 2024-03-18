@@ -2,11 +2,12 @@ version: '3'
 services:
   service1:
     build: ./service1
+    container_name: clasp_mobile
     restart: always
     # ports:
     #   - "8000:8000"
     expose:
-      - "8000"
+      - 8000
     env_file:
       - ./service1/.env
     environment:
@@ -31,10 +32,13 @@ services:
 
   nginx:
     image: nginx
+    container_name: nginx_container
     ports:
-      - "80:80"
+      - 80:80
+      - 443:443
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./openssl:/etc/nginx/ssl
     depends_on:
       - service1
     # volumes:

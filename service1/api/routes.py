@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from api.utils.auth import authenticate
 # from bson.objectid import ObjectId
 
-db = MongoClient(os.environ.get("NGROK_MONGO_URL"))
+db = MongoClient(os.environ.get("MONGO_URL"))
 
 api_bp = Blueprint('api', __name__)
 

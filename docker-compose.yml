@@ -1,17 +1,20 @@
 version: '3'
 services:
   service1:
-    build: .
-    ports:
-      - "5001:5001"
+    build: ./service1
+    restart: always
+    # ports:
+    #   - "8000:8000"
+    expose:
+      - "8000"
     env_file:
-      - .env
-    # environment:
-    # - MONGO_URI=mongodb://host.docker.internal:27017
-    # - MONGO_URI=mongodb://mongo:27017
-    # - MONGO_DB_NAME=claspMobileDB
-    # extra_hosts:
-    #   - "host.docker.internal:host-gateway"
+      - ./service1/.env
+    environment:
+      - MONGO_URI=mongodb://host.docker.internal:27017
+      # - MONGO_URI=mongodb://mongo:27017
+      # - MONGO_DB_NAME=claspMobileDB
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     # depends_on:
     #   - mongo
 
@@ -26,14 +29,13 @@ services:
     # ports:
     #   - "27017:27017"
 
-    # nginx:
-    #   image: nginx
-    #   volumes:
-    #     - ./nginx.conf:/etc/nginx/nginx.conf
-    #   ports:
-    #     - "80:80"
-    #   depends_on:
-    #     - service1
-
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - service1
     # volumes:
     #   mongo_data:

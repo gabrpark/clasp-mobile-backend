@@ -1,2 +1,4 @@
 .env
 .idea/
+nginx.conf
+docker-compose.yml

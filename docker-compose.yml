@@ -37,8 +37,9 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./openssl:/etc/nginx/ssl
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt/live/clasplabiml.xyz/fullchain.pem:/etc/nginx/cert.pem:ro
+      - /etc/letsencrypt/live/clasplabiml.xyz/privkey.pem:/etc/nginx/key.pem:ro
     depends_on:
       - service1
     # volumes:

@@ -88,7 +88,7 @@ class MongoDBResource(Resource):
         return {'id': str(result.inserted_id)}
 
 
-api.add_resource(Status, '/api')
+api.add_resource(Status, '/status')
 api.add_resource(MongoDBResource, '/api/<collection_name>/')
 
 if __name__ == '__main__':

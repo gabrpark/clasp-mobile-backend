@@ -11,11 +11,11 @@ services:
     env_file:
       - ./service1/.env
     environment:
-      - MONGO_URI=mongodb://host.docker.internal:27017/claspMobileDB
+      # - MONGO_URI=mongodb://apiReadWriteUser:N7BKZQR;lDGSc[U@host.docker.internal:27017
+      # - MONGO_URI=mongodb://host.docker.internal:27017/claspMobileDB
+      - MONGO_URI = "mongodb://host.docker.internal:27017/claspMobileDB"
       # - MONGO_URI=mongodb://mongo:27017
       # - MONGO_DB_NAME=claspMobileDB
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     # depends_on:
     #   - mongo
 

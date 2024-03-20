@@ -72,7 +72,7 @@ class MongoDBResource(Resource):
             "MONGO_URI")).claspMobileDB
         super().__init__()
 
-    @authenticate
+    #@authenticate
     def get(self, collection_name):
         args = request.args.to_dict()
         collection = self.db[collection_name]

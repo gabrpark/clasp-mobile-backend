@@ -2,7 +2,7 @@ import logging
 from functools import wraps
 from firebase_admin import credentials, auth, initialize_app
 from flask import request
-#from config import firebase_config
+# from config import firebase_config
 import os
 
 firebase_config = {
@@ -21,14 +21,14 @@ firebase_config = {
 
 # Initialize Firebase Admin
 cred = credentials.Certificate(firebase_config)
-initialize_app(cred)
+firebase_admin.initialize_app(cred)
+
 
 def authenticate(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         id_jwt_token = request.headers.get('Authorization')
         if not id_jwt_token:
-            logging.error('Authorization token missing')
             return {'status': 'error', 'message': 'Authorization token missing'}, 401
 
         try:

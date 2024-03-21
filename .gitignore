@@ -2,3 +2,4 @@
 .idea/
 nginx.conf
 docker-compose.yml
+.openssl/

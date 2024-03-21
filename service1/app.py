@@ -80,7 +80,7 @@ class MongoDBResource(Resource):
         print(documents)
         return jsonify(documents)
 
-    @authenticate
+    # @authenticate
     def post(self, collection_name):
         data = request.json
         collection = self.db[collection_name]
@@ -92,5 +92,6 @@ api.add_resource(Status, '/status')
 api.add_resource(MongoDBResource, '/api/<collection_name>/')
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)  # Run app

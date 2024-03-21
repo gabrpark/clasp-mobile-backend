@@ -4,43 +4,48 @@ services:
     build: ./service1
     container_name: clasp_mobile
     restart: always
-    # ports:
-    #   - "8000:8000"
+#    ports:
+#      - "8000:8000"
     expose:
       - 8000
     env_file:
       - ./service1/.env
     environment:
       # - MONGO_URI=mongodb://apiReadWriteUser:N7BKZQR;lDGSc[U@host.docker.internal:27017
-      # - MONGO_URI=mongodb://host.docker.internal:27017/claspMobileDB
-      - MONGO_URI = "mongodb://host.docker.internal:27017/claspMobileDB"
+#      - MONGO_URI=mongodb://host.docker.internal:27017
+      - MONGO_URI=mongodb://root:example@mongo:27017
       # - MONGO_URI=mongodb://mongo:27017
       # - MONGO_DB_NAME=claspMobileDB
-    # depends_on:
-    #   - mongo
+#    depends_on:
+#      - mongo
 
-    # mongo:
-    #   image: mongo
-    #   restart: always
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: username
-    #   MONGO_INITDB_ROOT_PASSWORD: password
-    # volumes:
-    #   - mongo_data:/data/db
-    # ports:
-    #   - "27017:27017"
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    volumes:
+    - mongo_data:/data/db
+#    ports:
+#    - "27017:27017"
+    expose:
+      - 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
 
   nginx:
     image: nginx
     container_name: nginx_container
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - /etc/letsencrypt/live/clasplabiml.xyz/fullchain.pem:/etc/nginx/cert.pem:ro
-      - /etc/letsencrypt/live/clasplabiml.xyz/privkey.pem:/etc/nginx/key.pem:ro
+#      - /etc/letsencrypt/live/clasplabiml.xyz/fullchain.pem:/etc/nginx/cert.pem:ro
+#      - /etc/letsencrypt/live/clasplabiml.xyz/privkey.pem:/etc/nginx/key.pem:ro
+      - ./openssl:/etc/nginx/ssl
     depends_on:
       - service1
-    # volumes:
-    #   mongo_data:
+
+volumes:
+  mongo_data:

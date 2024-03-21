@@ -3,13 +3,13 @@ import os
 from functools import wraps
 import firebase_admin
 from firebase_admin import credentials, auth
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 # from flask_talisman import Talisman
 from flask_cors import CORS
 from flask_restful import Api, Resource
 from pymongo import MongoClient
 
-app = Flask(__name__)  # Create Flask app
+app = Flask(__name__, template_folder='./static')  # Create Flask app
 api = Api(app)  # Create API
 CORS(app)  # Enable CORS
 # Talisman(app)  # Enable HTTPS
@@ -41,8 +41,7 @@ def authenticate(f):
             return {'status': 'error', 'message': 'Authorization token missing'}, 401
 
         try:
-            decoded_token = auth.verify_id_token(
-                id_jwt_token, check_revoked=True)
+            decoded_token = auth.verify_id_token(id_jwt_token, check_revoked=True)
             request.user = decoded_token
             return f(*args, **kwargs)
         except auth.RevokedIdTokenError:
@@ -55,7 +54,8 @@ def authenticate(f):
             logging.error('Authentication error: %s', str(e))
             return {'status': 'error', 'message': 'Authentication error'}, 500
 
-    return decorated_function
+    #return decorated_function
+    return decorated_function 
 
 
 class Status(Resource):
@@ -77,19 +77,22 @@ class MongoDBResource(Resource):
         args = request.args.to_dict()
         collection = self.db[collection_name]
         documents = list(collection.find(args, {'_id': 0}))
-        print(documents)
         return jsonify(documents)
 
-    # @authenticate
+    #@authenticate
     def post(self, collection_name):
         data = request.json
         collection = self.db[collection_name]
         result = collection.insert_one(data)
         return {'id': str(result.inserted_id)}
 
+class ApiDocs(Resource):
+    def get(self):
+        return render_template('index.html')
 
 api.add_resource(Status, '/status')
 api.add_resource(MongoDBResource, '/api/<collection_name>/')
+api.add_resource(ApiDocs, '/doc')
 
 if __name__ == '__main__':
     # port = int(os.environ.get("PORT", 5000))

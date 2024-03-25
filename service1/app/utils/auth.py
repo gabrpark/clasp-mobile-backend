@@ -1,14 +1,9 @@
 import logging
-import os
 from functools import wraps
 import firebase_admin
 from firebase_admin import credentials, auth
-from flask import Flask, request, jsonify, render_template, make_response, send_file
-# from flask_talisman import Talisman
-from flask_cors import CORS
-# from flask_restful import Api, Resource
-from pymongo import MongoClient
-from config import firebase_config
+from flask import request
+from app.config import firebase_config
 
 # Initialize Firebase Admin
 cred = credentials.Certificate(firebase_config)

@@ -1,0 +1,8 @@
+openai
+python-dotenv
+flask
+Flask-Cors
+pymongo
+spacy
+firebase-admin
+gunicorn
